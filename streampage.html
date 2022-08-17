@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testing</title>
+    <style>
+        img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            display: block;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-style: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+  
+    <img src="data:image/png;base64, " id="display-img"/>
+    
+    <script type="text/javascript" src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+
+    <script type="text/javascript">
+        const socket = io();
+
+        socket.on("connect", (data) => {
+            console.log("connected!", data);
+        });
+
+        socket.on("streamtoclient", (data) => {
+            console.log("streamed to client", data);
+            document.getElementById("display-img").setAttribute("src", "data:image/jpg;base64, " + data.data);
+        })
+    </script>
+</body>
+</html>
